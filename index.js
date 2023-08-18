@@ -54,7 +54,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
-app.use(static('public'));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     let responseText = "Welcome to my app!";
