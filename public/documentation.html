@@ -3,10 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyFlix</title>
+    <title>MyFlix API Documentaton</title>
 </head>
+
 <body>
-    <h1>Documentation</h1>
-    To   build   the   server-side   component   of   a   “movies”   web   application.   The   web  application   will   provide   users   with   access   to   information   about   different  movies,   directors,   and   genres.   Users   will   be   able   to   sign   up,   update   their  personal   information,   and   create   a   list   of   their   favorite   movies.
+    <div>
+        <h1>
+            MyFlix App
+        </h1>
+        <p>
+                The web application will provide users with access to information about different
+                movies, directors, and genres. Users will be able to sign up, update their
+                personal information, and create a list of their favorite movies.
+        </p>
+    </div>
+
+    <div class="container">
+        <h2 class="text-left">My Flix API Documentation</h2>
+    </div>
+
+    <!--table-->
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th>Logic</th>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>Get a list of All movies</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about all the movies </td>
+            </tr>
+
+            <tr>
+                <td>Get data about a single movie by name</td>
+                <td>/movies/:movieName</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single movie, containing description, genre, director,
+                     image URL, and whether it's featured or not property. Example:
+                     <code>
+						{
+							"Title": "The French Dispatch",
+							"Description": "A love letter to journalists...",
+							"Genre": {
+								"Name": "Comedy",
+								"Description": "Is a genre of fiction that ..."
+							},
+							"Director": {
+								"Name": "Wes Anderson",
+								"Bio": "Wesley Wales Anderson was born in Houston, Texas...",
+								"Birth": 1969.0
+							},
+							"ImageURL": "https://upload.wikimedia.org/wikipedia/en/7/78/The_French_Dispatch.jpeg",
+							"Featured": false
+						}
+					</code>
+ 
+                </td>
+            </tr>
+
+            <tr>
+                <td>Get data about a genre by genre's name </td>
+                <td>/movies/genre/:genreName</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a genre containing name and description properties. Example:
+                    <code>
+                        "Genre": {
+                            "Name": "Comedy",
+                            "Description": "Is a genre of fiction that ..."
+                            }
+                    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Get data about a director by director's name</td>
+                <td>/movies/diretors/:directorName</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a director. Example:
+                    <code>
+                        {
+                            "Name": "Wes Anderson",
+                            "Bio": "Wesley Wales Anderson is an American filmmaker. His films are known for their eccentricity, unique visual and narrative styles.",
+                            "Birth": "1969-05-01T00:00:00.000Z"
+                        }
+                     </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Add new user</td>
+                <td>/users</td>
+                <td>Post</td>
+                <td>
+                    A JSON object holding user data, structured like this:
+                    <code>
+                        {
+                            "Username": "Kim",
+                            "Password": "ula36ula",
+                            "Email": "kim.namura@fakeema.il",
+                            "Birthday": "1984-07-18"
+                        }
+                    </code>
+                </td>
+                <td>
+                    A JSON object holding user data plus an ID and a array for placing favorite movies:
+						<code>
+                            {
+                                "Username": "Kim",
+                                "Password": "ula36ula",
+                                "Email": "kim.namura@fakeema.il",
+                                "Birthday": "1984-07-18T00:00:00.000Z",
+                                "FavoriteMovies": [],
+                                "_id": "64de58a81b1e8dfa2e81f5b9",
+                                "__v": 0
+                            }
+					    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Update user information</td>
+                <td>/user/:userName</td>
+                <td>PUT</td>
+                <td>
+                    A JSON object holding the user info that should be changed. It should contain at least one of the following key/value pairs:
+                    <code>
+                        {
+                            "Username": String,
+                            "Password": String,
+                            "Email": String,
+                            "Birthday": Data
+                        }
+                    </code>
+                </td>
+                <td>
+                    A JSON object holding all user info with all key/values pair updated:
+						<code>
+                            {
+                                "Username": "Kim-Sophie",
+                                "Password": "ula36ula",
+                                "Email": "kim.namura@fakeema.il",
+                                "Birthday": "1984-07-18T00:00:00.000Z",
+                                "FavoriteMovies": [],
+                                "_id": "64de58a81b1e8dfa2e81f5b9",
+                                "__v": 0
+                            }
+					    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Add a movie to users favorite list</td>
+                <td>/user/:userName/movies/:movieID</td>
+                <td>POST</td>
+                <td>none</td>
+                <td>
+                    A JSON object holding all user info with all key/values pair updated:
+                    <code>
+                        {
+                            "Username": "Kim-Sophie",
+                            "Password": "ula36ula",
+                            "Email": "kim.namura@fakeema.il",
+                            "Birthday": "1984-07-18T00:00:00.000Z",
+                            "FavoriteMovies": ["64dcd768591669f639751ff8"],
+                            "_id": "64de58a81b1e8dfa2e81f5b9",
+                            "__v": 0
+                        }
+                    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Remove a movie from user favorite list</td>
+                <td>/users/:userName/movies/:movieID</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>
+                    A JSON object holding all user info with all key/values pair updated:
+                    <code>
+                        {
+                            "Username": "Kim-Sophie",
+                            "Password": "ula36ula",
+                            "Email": "kim.namura@fakeema.il",
+                            "Birthday": "1984-07-18T00:00:00.000Z",
+                            "FavoriteMovies": [],
+                            "_id": "64de58a81b1e8dfa2e81f5b9",
+                            "__v": 0
+                        }
+                    </code>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Delete user registration</td>
+                <td>/users/:userName</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A text message indicating whether a user was successfully removed.</td>
+            </tr>
+
+
+        </tbody>
+         
+    </table>
+
+</div>
+
+
+
 </body>
+
 </html>

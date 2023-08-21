@@ -2,76 +2,58 @@ const express = require("express");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
+const bodyParser = require('body-parser');
+const uuid = require('uuid');
 const app = express();
 
-const movieList = [
-    {
-      title: "film 1",
-      director: "director 1",
-    },
-    {
-      title: "film 2",
-      director: "director 2",
-    },
-    {
-      title: "film 3",
-      director: "director 3",
-    },
-    {
-      title: "film 4",
-      director: "director 4",
-    },
-    {
-      title: "film 5",
-      director: "director 5",
-    },
-    {
-      title: "film 6",
-      director: "director 6",
-    },
-    {
-      title: "film 7",
-      director: "director 7",
-    },
-    {
-      title: "film 8",
-      director: "director 8",
-    },
-    {
-      title: "film 9",
-      director: "director 9",
-    },
-    {
-      title: "film 10",
-      director: "director 10",
-    },
-  ];
+//#1 Return list of all movies 
+app.get('/movies', (req, res) => {
+  res.send('Successful GET returning data on all the movies')
+});
 
-  // create a write stream (in append mode)
-// a ‘log.txt’ file is created in root directory
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+//#2 Get data about a single movie by name
+app.get('/movies/:movieName', (req, res) => {
+  res.send('Succesful GET returning data on a single movie by name')
+});
 
-// setup the logger
-app.use(morgan('combined', {stream: accessLogStream}));
+//#3 Get data about a genre by genre's name
+app.get('/movies/genre/:genreName', (req, res) => {
+  res.send('Successful GET returning data on genres by genre name');
+});
+//#4 Get data abou director by directors name
+app.get('/movies/directors/:directorName', (req, res) =>{
+  res.send('Successful GET returning data on directors by directors name')
+});
+//#5Add new user
+app.post('/users', (req, res) => {
+  res.send('Successful POST adding new user')
+});
+//#6 Update user information
+app.put('/users/:userName', (req, res) => {
+  res.send('Succesful PUT updated user info')
+});
+//#7 Add a movie to users favorite list
+app.post('/users/:userName/movies/:movieID', (req, res) =>{
+  res.send('Successful POST adding movies to user favortite list')
+});
+//#8 Remove a movie from user favorite list
+app.delete('/users/:userName/movies/:movieID', (req, res) =>{
+  res.send('Succesful DELETE movies deleted fron users favorite list')
+});
+//#9 Delete user registration
+app.delete('/users/:userName', (req, res) =>{
+  res.send('Successful DELETE user account deleted')
+})
 
-app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    let responseText = "Welcome to my app!";
-    res.send(responseText);
-  });
-  
-  app.get('/movies', (req, res) => {
-    res.json(movieList);
-  });
-
-  //error handling middleware function
+//error handling middleware function
 //should be last, but before app.listen()
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send("something broke");
   });
-  
+
+//listen for requests
   app.listen(8080, () => {
     console.log("Your app is listening on port 8080.");
   });
