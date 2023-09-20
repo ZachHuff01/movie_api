@@ -12,7 +12,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded ({ extended:true }));
 
-mongoose.connect('mongodb://127.0.0.1:27017/myDB', {useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/myDB', {useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect('mongodb://127.0.0.1:8080/myDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Return list of all movies 
 app.get('/movies', async (req, res) => {
@@ -25,9 +27,9 @@ app.get('/movies', async (req, res) => {
     res.status(500).send('Error: ' + err);
   });
 });
-// Get data about a single movie by name
-app.get('/movies/:movieName', async (req, res) => {
-  await Movies.findOne({ Movies: req.params.movieName })
+// Get data about a single movie by title
+app.get('/movies/:Title', async (req, res) => {
+ await Movies.findOne({ Title: req.params.Title })
     .then((movies) => {
       res.json(movies);
     })
@@ -39,9 +41,9 @@ app.get('/movies/:movieName', async (req, res) => {
 
 // Get data about a genre by genre's name
 app.get('/movies/genre/:genreName', async (req, res) => {
-  await Movies.findOne({ Genre: req.params.genreName })
-    .then((movies) => {
-      res.json(movies);
+  await Movies.findOne({ 'Genre.Name': req.params.genreName })
+    .then((movie) => {
+      res.json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -49,7 +51,7 @@ app.get('/movies/genre/:genreName', async (req, res) => {
     });
 });
 //Get data about director by directors name
-app.get('/movies/directors/:directorName', async (req, res) =>{
+app.get('/movies/director/:directorName', async (req, res) =>{
   await Movies.findOne({ Director: req.params.directorName })
     .then((movies) => {
       res.json(movies);
