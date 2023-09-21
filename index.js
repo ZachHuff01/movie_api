@@ -40,10 +40,10 @@ app.get('/movies/:Title', async (req, res) => {
 });
 
 //Get data about genre by genre name 
-app.get('movies/genre/:Name', async (req, res) => {
-  await Movies.findOne({ Name: req.params.Name })
-    .then((genre) => {
-      res.status(200).json(genre.Description);
+app.get('movies/genre/:genreName', async (req, res) => {
+  await Movies.findOne({ 'Genre.Name': req.params.genreName })
+    .then((movies) => {
+      res.status(200).json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -52,9 +52,9 @@ app.get('movies/genre/:Name', async (req, res) => {
 });
 //Get data about director by directors name
 app.get('/movies/director/:directorName', async (req, res) =>{
-  await Movies.findOne({ Director: req.params.directorName })
-    .then((Director) => {
-      res.json(Director);
+  await Movies.find({ 'Director.Name': req.params.directorName })
+    .then((movies) => {
+      res.json(movies);
     })
     .catch((err) => {
       console.error(err);
