@@ -27,7 +27,7 @@ app.get('/movies', async (req, res) => {
     res.status(500).send('Error: ' + err);
   });
 });
-// Get data about a single movie by title
+// Get data about a single movie by title()
 app.get('/movies/:Title', async (req, res) => {
  await Movies.findOne({ Title: req.params.Title })
     .then((movies) => {
@@ -39,11 +39,11 @@ app.get('/movies/:Title', async (req, res) => {
     });
 });
 
-// Get data about a genre by genre's name
-app.get('/movies/genre/:genreName', async (req, res) => {
-  await Movies.findOne({ 'Genre.Name': req.params.genreName })
-    .then((movie) => {
-      res.json(movie);
+//Get data about genre by genre name 
+app.get('movies/genre/:Name', async (req, res) => {
+  await Movies.findOne({ Name: req.params.Name })
+    .then((genre) => {
+      res.status(200).json(genre.Description);
     })
     .catch((err) => {
       console.error(err);
@@ -53,8 +53,8 @@ app.get('/movies/genre/:genreName', async (req, res) => {
 //Get data about director by directors name
 app.get('/movies/director/:directorName', async (req, res) =>{
   await Movies.findOne({ Director: req.params.directorName })
-    .then((movies) => {
-      res.json(movies);
+    .then((Director) => {
+      res.json(Director);
     })
     .catch((err) => {
       console.error(err);
