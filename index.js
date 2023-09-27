@@ -6,7 +6,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
   
-const Models = require('./models.js');
+const Models = require('./model.js');
 
 //Connect Mongoose to myDB
 mongoose.connect(
