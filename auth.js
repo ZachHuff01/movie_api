@@ -16,27 +16,16 @@ const jwt = require('jsonwebtoken'),
       
       //Login
       module.exports = (router) => {
-        router.post('/users/login', (req, res) => {
+        router.post('/login', (req, res) => {
           passport.authenticate('local', { session: false }, (error, user, info) => {
-            if (error) {
-                console.log(error)
-                return res.status(400).json({
-                    message: 'Error error',
-                    user: user
-                });
+          
+            if (error || !user) {
+              return res.status(400).json({
+                message: 'Something is not right',
+                user: user
+              });
             }
-            if (!user) {
-                return res.status(400).json({
-                    message: 'Error no user',
-                    user: user
-                });
-            }
-            // if (error || !user) {
-            //   return res.status(400).json({
-            //     message: 'Something is not right',
-            //     user: user
-            //   });
-            // }
+            
             req.login(user, { session: false }, (error) => {
               if (error) {
                 res.send(error);

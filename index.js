@@ -4,9 +4,8 @@ const express = require('express'),
     fs = require('fs'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose');
-  
-const Models = require('./model.js');
+    mongoose = require('mongoose'),
+    Models = require('./model.js');
 
 //Connect Mongoose to myDB
 mongoose.connect(
@@ -23,6 +22,7 @@ const app = express(),
 // Init body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
 
 
 // Authentification & Login Endpoint
@@ -57,7 +57,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), asyn
 
 //Get data about genre by genre name 
 app.get('movies/genre/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.findOne({ 'Genre.Name': req.params.genreName })
+  await Movies.find({ 'genre.Name': req.params.genreName })
     .then((movies) => {
       res.status(200).json(movies);
     })
