@@ -56,16 +56,22 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), asyn
 });
 
 //Get data about genre by genre name 
-app.get('movies/genre/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.find({ 'genre.Name': req.params.genreName })
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  Movies.find({ 'Genre.Name': req.params.genreName })
     .then((movies) => {
-      res.status(200).json(movies);
+      if (!movies) {
+        return res.status(404).send('Error:' + 'Genre not found')}
+        else {
+          res.status(200).json(movies);
+        }
     })
+      
     .catch((err) => {
       console.error(err);
       res.status(500).send('Error: ' + err);
     });
-});
+  });
+
 
 //Get data about director by directors name
 app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) =>{
@@ -127,8 +133,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
     });
 });
 // Update a user's info, by username
-app.put('/users/:UserName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.UserName}, 
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username}, 
      {$set:
       {
         Username: req.body.Username,
