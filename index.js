@@ -127,8 +127,8 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
     });
 });
 // Update a user's info, by username
-app.put('/users/:userName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Users.findOneAndUpdate({ Username: req.params.Username}, 
+app.put('/users/:UserName', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.UserName}, 
      {$set:
       {
         Username: req.body.Username,
@@ -140,8 +140,13 @@ app.put('/users/:userName', passport.authenticate('jwt', { session: false }), as
   {new: true}) // This line makes sure that the updated document is returned
 
   .then((updatedUser) => {
+    if (!updatedUser) {
+      return res.status(404).send('Error:' + 'User was not found');
+    }
     res.json(updatedUser);
-  })
+  }) 
+ 
+
     .catch((err) => {
       console.error(err);
       res.status(500).send( 'Error: ' + err);
