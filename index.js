@@ -53,7 +53,7 @@ require('./passport');
 
 
 // Return list of all movies 
-app.get('movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
   .then((movies) => {
     res.status(201).json(movies);
@@ -64,7 +64,7 @@ app.get('movies', passport.authenticate('jwt', { session: false }), async (req, 
   });
 });
 // Get data about a single movie by title()
-app.get('movies/:Title', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), async (req, res) => {
  await Movies.findOne({ Title: req.params.Title })
     .then((movies) => {
       res.json(movies);
@@ -77,7 +77,7 @@ app.get('movies/:Title', passport.authenticate('jwt', { session: false }), async
 });
 
 //Get data about genre by genre name 
-app.get('movies/genre/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
   Movies.find({ 'Genre.Name': req.params.genreName })
     .then((movies) => {
       if (!movies) {
@@ -95,7 +95,7 @@ app.get('movies/genre/:genreName', passport.authenticate('jwt', { session: false
 
 
 //Get data about director by directors name
-app.get('movies/director/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) =>{
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) =>{
   await Movies.find({ 'Director.Name': req.params.directorName })
     .then((movies) => {
       res.json(movies);
@@ -106,7 +106,7 @@ app.get('movies/director/:directorName', passport.authenticate('jwt', { session:
     });
 });
 //Add new user
-app.post('users',
+app.post('/users',
 // Validation logic here for request
   //you can either use a chain of methods like .not().isEmpty()
   //which means "opposite of isEmpty" in plain english "is not empty"
