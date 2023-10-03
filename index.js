@@ -7,17 +7,18 @@ const express = require('express'),
     mongoose = require('mongoose'),
     Models = require('./model.js');
 
-const {check, validationResult} = require('express-validator');
-
-//Connect Mongoose to myDB
+    //Connect Mongoose to myDB
 // mongoose.connect(
 //   'mongodb://localhost:27017/myDB', 
 //   {useNewUrlParser: true, useUnifiedTopology: true }
 //   );
   mongoose.connect(process.env.CONNECTION_URI, {
-      useNewUrlParser: true, 
-      useUnifiedTopology: true,
-    });
+    useNewUrlParser: true, 
+    useUnifiedTopology: true,
+  });
+
+const {check, validationResult} = require('express-validator');
+
 
 // Import Mongoose models
 const app = express(),
