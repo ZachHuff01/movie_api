@@ -12,10 +12,11 @@ const express = require('express'),
 //   'mongodb://localhost:27017/myDB', 
 //   {useNewUrlParser: true, useUnifiedTopology: true }
 //   );
-  mongoose.connect(process.env.CONNECTION_URI, {
+  mongoose.connect(CONNECTION_URI, {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
   });
+
 
 const {check, validationResult} = require('express-validator');
 
