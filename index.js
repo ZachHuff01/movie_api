@@ -1,24 +1,21 @@
 // Modules
-const express = require('express'),
-    morgan = require('morgan'),
-    fs = require('fs'),
-    path = require('path'),
-    bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-    Models = require('./model.js');
-
+const express = require('express');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Models = require('./model.js');
+const {check, validationResult} = require('express-validator');
     //Connect Mongoose to myDB
 // mongoose.connect(
 //   'mongodb://localhost:27017/myDB', 
 //   {useNewUrlParser: true, useUnifiedTopology: true }
 //   );
-  mongoose.connect(CONNECTION_URI, {
+  mongoose.connect(process.env.CONNECTION_URI, {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
   });
-
-
-const {check, validationResult} = require('express-validator');
 
 
 // Import Mongoose models
@@ -35,18 +32,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 const cors = require('cors');
 app.use(cors());
 //Allows Certain domains to use API
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://zachs-movie-app-19706817785d.herokuapp.com'];
 
-// // app.use(cors({
-// //   origin: (origin, callback) => {
-// //     if(!origin) return callback(null, true);
-// //     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-// //       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-// //       return callback(new Error(message ), false);
-// //     }
-// //     return callback(null, true);
-// //   }
-// // }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application does not allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Authentification & Login Endpoint
 let auth = require('./auth')(app) // Login HTML Authentification
