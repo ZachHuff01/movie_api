@@ -33,7 +33,7 @@ const cors = require('cors');
 app.use(cors());
 //Allows Certain domains to use API
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com',
-'https://git.heroku.com/zachs-movie-app.git'];
+'https://zachs-movie-app-19706817785d.herokuapp.com/'];
 
 app.use(cors({
   origin: (origin, callback) => {
