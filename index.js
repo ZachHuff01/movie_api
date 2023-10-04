@@ -12,10 +12,12 @@ const {check, validationResult} = require('express-validator');
 //   'mongodb://localhost:27017/myDB', 
 //   {useNewUrlParser: true, useUnifiedTopology: true }
 //   );
-  mongoose.connect('mongodb+srv://zhuff1:VDimYzoPO8iGKF1x@mydb.tzivuue.mongodb.net/myDB?retryWrites=true&w=majority', {
+  mongoose.connect('mongodb+srv://zhuff1:sCMCZBxadNF7g00c@mydb.tzivuue.mongodb.net/myDB?retryWrites=true&w=majority', {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
   });
+
+  
 
 
 // Import Mongoose models
