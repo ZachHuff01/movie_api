@@ -52,6 +52,9 @@ let auth = require('./auth')(app) // Login HTML Authentification
 const passport = require('passport'); // JWT Authentification
 require('./passport');
 
+app.get('/', (req, res) => {
+  res.send('Welcome to my app');
+});
 
 // Return list of all movies 
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
