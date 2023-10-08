@@ -53,8 +53,12 @@ const passport = require('passport'); // JWT Authentification
 require('./passport');
 
 app.get('/', (req, res) => {
-  res.send('Welcome to my app');
-});
+  res.sendFile('index.html', { root: __dirname });
+ });
+
+ app.get('documentation.html', (req, res) => {
+  res.sendFile('public/documentation.html', { root: __dirname });
+ });
 
 // Return list of all movies 
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
